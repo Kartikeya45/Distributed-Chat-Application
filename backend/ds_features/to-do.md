@@ -11,8 +11,8 @@
 #### - - - Clock Synchronization Algorithms
 - [ ] Christian's algorithm
 - [ ] Berkeley algorithm
-- [ ] 
-- [ ] 
+- [ ] Network Time Protocol (NTP)
+- [ ] Precision Time Protocol (PTP)
 
 
 ###  - Consistency
