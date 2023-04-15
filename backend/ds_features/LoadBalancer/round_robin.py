@@ -26,7 +26,7 @@ class RoundRobinLoadBalancer:
         self.servers = servers                 # Need to handle server crashing here
         self.current = 0                       # When a server crashes, indexing can get messed up, NEED TO HANDLE IT
         
-    def next_server(self):
+    def next_server(self) -> Server:
         if self.current == len(self.servers):  
             self.current = 0
         server = self.servers[self.current]
