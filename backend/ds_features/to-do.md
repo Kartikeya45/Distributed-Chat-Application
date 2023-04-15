@@ -8,6 +8,12 @@
 ###  - Clock Synchronization
 - [ ] Implement a clock synchronization protocol to ensure that all nodes have a consistent view of time.
 - [ ] Use a common reference time source, such as a time server, to synchronize the clocks. 
+#### - - - Clock Synchronization Algorithms
+- [ ] Christian's algorithm
+- [ ] Berkeley algorithm
+- [ ] 
+- [ ] 
+
 
 ###  - Consistency
 - [ ] Implement consistency protocols to ensure that all nodes have a consistent view of the shared state.
