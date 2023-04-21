@@ -58,23 +58,24 @@ class LeastResponseTimeBalancer:
         server.decrement_current_connections()
 
 
-if __name__ == '__main__':
-    server1 = Server("Server 1", 10, 5)
-    server2 = Server("Server 2", 15, 5)
-    server3 = Server("Server 3", 20, 5)
 
-    list_of_servers = [
-        server1,
-        server2,
-        server3,
-    ]
-    
-    balancer = LeastResponseTimeBalancer(list_of_servers)
-    
-    for i in range(10):
-        server, response_time = balancer.get_next_server()
-        if server is not None:
-            print(f"Request {i}: {server}, Response time: {response_time}")
-            balancer.release_server(server)
-        else:
-            print(f"No server available for request {i}")
+# if __name__ == '__main__':
+server1 = Server("Server 1", 10, 5)
+server2 = Server("Server 2", 15, 5)
+server3 = Server("Server 3", 20, 5)
+
+list_of_servers = [
+    server1,
+    server2,
+    server3,
+]
+
+balancer = LeastResponseTimeBalancer(list_of_servers)
+
+for i in range(10):
+    server, response_time = balancer.get_next_server()
+    if server is not None:
+        print(f"Request {i}: {server}, Response time: {response_time}")
+        balancer.release_server(server)
+    else:
+        print(f"No server available for request {i}")
