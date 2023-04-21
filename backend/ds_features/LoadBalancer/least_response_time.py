@@ -1,5 +1,11 @@
 from typing import List, Tuple
 
+import sys
+sys.path.append('../../..')
+from backend.app.main_server import get_socket
+
+socket = get_socket()
+
 class Server:
     def __init__(self, name: str, response_time: int, capacity: int):
         self.name = name
@@ -27,6 +33,8 @@ class Server:
 
 class LeastResponseTimeBalancer:
     def __init__(self, servers: List[Server]):
+        print("Init also ran")
+        socket.send_string("Initializating LeastResponseTimeBalancer!")
         self.servers = servers
     
     def get_next_server(self) -> Tuple[Server, int]:

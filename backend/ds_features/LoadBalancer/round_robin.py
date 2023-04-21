@@ -12,6 +12,8 @@ sys.path.append('../../..')
 
 from backend.app.server_ds_features_import_testing import *
 
+from backend.app.main_server import socket
+
 class RoundRobinLoadBalancer:
     '''
         When the Distributed System is initiated or when we want to change the "LoadBalancerAlgorithm" used to "RoundRobinLoadBalancer", 
