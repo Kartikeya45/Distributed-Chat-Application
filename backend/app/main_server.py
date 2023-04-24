@@ -2,6 +2,8 @@ import zmq
 import random
 import time
 
+print("-------------SERVER STARTED-------------")
+
 import sys
 sys.path.append('../')
 from ds_features.LoadBalancer.round_robin import RoundRobinLoadBalancer
@@ -46,34 +48,34 @@ class Server:
 '''
 import collections
 
-class RoundRobinLoadBalancer(Server):
-    def __init__(self, servers):
-        super().__init__()
-        self.servers = collections.deque(servers)
-        self.num_servers = len(servers)
+# class RoundRobinLoadBalancer(Server):
+#     def __init__(self, servers):
+#         super().__init__()
+#         self.servers = collections.deque(servers)
+#         self.num_servers = len(servers)
     
-    def add_server(self):
-        new_server = Server()
-        self.servers.append(new_server)
-        Server.counter += 1
-        self.num_servers += 1
-        self.display_servers()
+#     def add_server(self):
+#         new_server = Server()
+#         self.servers.append(new_server)
+#         Server.counter += 1
+#         self.num_servers += 1
+#         self.display_servers()
 
-    def next_server(self):
-        self.servers.rotate(-1)
+#     def next_server(self):
+#         self.servers.rotate(-1)
 
-        return self.servers[0]
+#         return self.servers[0]
     
-    def remove_server(self, server):
-        try:
-            self.servers.remove(server)
-            self.num_servers -= 1
-        except ValueError:
-            print(f"{server} not found in the workers list")
+#     def remove_server(self, server):
+#         try:
+#             self.servers.remove(server)
+#             self.num_servers -= 1
+#         except ValueError:
+#             print(f"{server} not found in the workers list")
     
-    def display_servers(self):
-        for i in self.servers:
-            print(i)
+#     def display_servers(self):
+#         for i in self.servers:
+#             print(i)
 
 '''
     Testing Load Balancer from main_server.py
@@ -116,3 +118,5 @@ for user in users:
 
     if(user==1):
         lb.remove_server(list_of_servers[0])
+
+print("Server done")
