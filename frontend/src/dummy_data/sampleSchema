@@ -1,0 +1,46 @@
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+});
+
+const messageSchema = new mongoose.Schema({
+  sender: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  recipient: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  body: {
+    type: String,
+    required: true,
+  },
+});
+
+const User = mongoose.model("User", userSchema);
+const Message = mongoose.model("Message", messageSchema);
+
+// Create a message with a sender and recipient
+const sender = new User({ name: "Alice" });
+const recipient = new User({ name: "Bob" });
+await sender.save();
+await recipient.save();
+
+const message = new Message({
+  sender: sender._id,
+  recipient: recipient._id,
+  body: "Hello, Bob!",
+});
+await message.save();
+
+// Retrieve the message and populate the sender and recipient fields with User documents
+const retrievedMessage = await Message.findById(message._id).populate(
+  "sender recipient"
+);
+console.log(retrievedMessage.sender.name); // 'Alice'
+console.log(retrievedMessage.recipient.name); // 'Bob'

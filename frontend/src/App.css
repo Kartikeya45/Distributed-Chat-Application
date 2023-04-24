@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+  font-family: "futura", "Neuzeit-Grotesk";
+}
+body {
+  margin: 0;
+}
+
+.chat-details {
+}
+
+.message {
+  max-width: 60%;
+}
+
+.messager {
+  display: flex;
+  flex-direction: column;
+}
+
+.messager > .message {
+  background-color: rgb(207, 247, 234);
+  align-self: flex-end;
+}
+
+.reciever {
+  display: flex;
+  flex-direction: column;
+}
+
+.reciever > .message {
+  background-color: rgb(235, 228, 228);
+  align-self: flex-start;
+}
+
+.groupMsg-others{
+  color: rgb(41, 142, 231);
+
+}
