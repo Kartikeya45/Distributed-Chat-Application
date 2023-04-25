@@ -14,10 +14,11 @@ class BerkeleyServer:
     def remove_client(self, client):
         self.clients.remove(client)
 
-    def synchronize_clocks(self):
+    def synchronize_clocks(self, socket):
         # Step 1: Get the current time from all clients
         client_times = []
         for client in self.clients:
+            socket.send_string("highlight_edge_direction " + str(self.server)[1:-1] + "," + str(client))
             client_times.append(client.get_time())
 
         # Step 2: Calculate the average time difference
@@ -31,6 +32,7 @@ class BerkeleyServer:
 
         # Step 4: Send the new time to all clients
         for client in self.clients:
+            socket.send_string("highlight_edge_direction_green " + str(self.server)[1:-1] + "," + str(client))
             client.adjust_time(avg_time_diff)
 
     def get_time(self):
@@ -60,6 +62,9 @@ class BerkeleyClient:
         # Set the new time as the client's time
         # You can use any method to set the time, such as adjusting the system clock
         pass
+
+    def __repr__(self):
+        return self.client.name
 
 if(__name__=="__main__"):
     # Example usage

@@ -17,4 +17,9 @@
 4. Due to Ciruclar Imports, not able to import Server to round_robin.py
     So, instead I just copy pasted "class Server" from main_server.py
 
-5.
+5. Store all the commands, so that we dont have to rerun the whole thing to see an interactions
+    Create a python file to process just these commands all at a time, and if we press left or right arrow, previous or next action takes place accoridnt to command
+
+6. Use different colors to represent differnet interactions between nodes
+
+7.

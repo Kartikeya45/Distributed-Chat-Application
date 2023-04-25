@@ -98,7 +98,7 @@ class User:
 users = []
 
 def initial_users(num=4):
-    names = ['USER1', 'USER2', 'USER3', 'USER4']
+    names = ['USER0', 'USER1', 'USER2', 'USER3']
     for i in range(num):
         users.append(User(names[i]))
         socket.send_string("user_add" + " "+ users[-1].name)
@@ -138,7 +138,7 @@ for i in users:
 
 trial_server = berkeley_servers[0]
 for trial_server in berkeley_servers:
-    trial_server.synchronize_clocks()
+    trial_server.synchronize_clocks(socket)
     print(f"Server time: {trial_server.get_time()}")
 
     for k in trial_server.clients:
