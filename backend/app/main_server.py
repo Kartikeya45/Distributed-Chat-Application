@@ -10,6 +10,7 @@ import sys
 sys.path.append('../')
 from ds_features.LoadBalancer.round_robin import RoundRobinLoadBalancer ## find a way to get this
 from ds_features.Coordination.ClockSynchronization.berkeley import *
+from ds_features.Coordination.ClockSynchronization.christian import *
 
 '''
     Centralized Message Queue for Monitoring a Distributed System.
@@ -20,7 +21,7 @@ from ds_features.Coordination.ClockSynchronization.berkeley import *
 
 context = zmq.Context()
 socket = context.socket(zmq.PUSH)
-socket.bind("tcp://127.0.0.1:5678")
+socket.bind("tcp://127.0.0.1:9876")
 # message = input("Enter message to be sent: ")
 # socket.send_string(message)
 
@@ -116,30 +117,58 @@ print("Server done")
 # ------------------- CLOCK SYNCHRONIZATION ----------------------------------
 print("Clock Synchronization started")
 
-berkeley_servers = []
-for i in list_of_servers:
-    berkeley_servers.append(BerkeleyServer(i))
+def berkeley():
+    berkeley_servers = []
+    for i in list_of_servers:
+        berkeley_servers.append(BerkeleyServer(i))
 
-berkeley_clients = []
-for i in users:
-    # Find the server that the user is connected to
-    server_of_i = i.server
-    b_server = None
-    index=0
-    for ind, j in enumerate(berkeley_servers):
-        if(j.server is server_of_i):
-            b_server = j
-            index = ind
-            break
+    berkeley_clients = []
+    for i in users:
+        # Find the server that the user is connected to
+        server_of_i = i.server
+        b_server = None
+        index=0
+        for ind, j in enumerate(berkeley_servers):
+            if(j.server is server_of_i):
+                b_server = j
+                index = ind
+                break
 
-    berkeley_clients.append(BerkeleyClient(i, b_server))
-    berkeley_servers[index].add_client(berkeley_clients[-1])
+        berkeley_clients.append(BerkeleyClient(i, b_server))
+        berkeley_servers[index].add_client(berkeley_clients[-1])
 
 
-trial_server = berkeley_servers[0]
-for trial_server in berkeley_servers:
-    trial_server.synchronize_clocks(socket)
-    print(f"Server time: {trial_server.get_time()}")
+    trial_server = berkeley_servers[0]
+    for trial_server in berkeley_servers:
+        trial_server.synchronize_clocks(socket)
+        print(f"Server time: {trial_server.get_time()}")
 
-    for k in trial_server.clients:
-        print(k.get_time())
+        for k in trial_server.clients:
+            print(k.get_time())
+
+def cristian():
+    cristian_servers = []
+    for i in list_of_servers:
+        cristian_servers.append(CristianServer(i))
+
+    cristian_clients = []
+    for i in users:
+        # Find the server that the user is connected to
+        server_of_i = i.server
+        c_server = None
+        index=0
+        for ind, j in enumerate(cristian_servers):
+            if(j.server is server_of_i):
+                c_server = j
+                index = ind
+                break
+        print("LOOK THIS", i)
+        cristian_clients.append(CristianClient(i, c_server, c_server.server))
+        cristian_servers[index].add_client(cristian_clients[-1])
+
+    for trial_client in cristian_clients:
+        trial_client.synchronize_clock(socket)
+        print(f"Client time time: {trial_client.get_time()}")
+
+cristian()
+# berkeley()

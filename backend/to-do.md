@@ -22,4 +22,10 @@
 
 6. Use different colors to represent differnet interactions between nodes
 
-7.
+7. Berkeley, Crisitian create separate run files
+    Or put them inside their folders
+     -- single line from main_server should be able to run the algorithm
+
+    Or make it menu driven
+
+8.
