@@ -11,6 +11,7 @@ sys.path.append('../')
 from ds_features.LoadBalancer.round_robin import RoundRobinLoadBalancer ## find a way to get this
 from ds_features.Coordination.ClockSynchronization.berkeley import *
 from ds_features.Coordination.ClockSynchronization.christian import *
+from ds_features.Coordination.ClockSynchronization.ntp import *
 
 '''
     Centralized Message Queue for Monitoring a Distributed System.
@@ -92,6 +93,7 @@ class User:
         self.server = server
 
     def __repr__(self):
+        return self.name
         print(f"User Name: {self.name} is assigned to Server: {self.server}")
         return f"User Name: {self.name} is assigned to Server: {self.server}"
 
@@ -170,5 +172,18 @@ def cristian():
         trial_client.synchronize_clock(socket)
         print(f"Client time time: {trial_client.get_time()}")
 
-cristian()
+def ntp():
+    ntp_clients = []
+    for server in list_of_servers:
+        ntp_clients.append(NTPClient(server, socket))
+
+    for user in users:
+        ntp_clients.append(NTPClient(user, socket))
+    
+    for client in ntp_clients:
+        client.update_time()
+        print(f"Current time of {client}: ", client.get_current_time())
+
+ntp()
+# cristian()
 # berkeley()

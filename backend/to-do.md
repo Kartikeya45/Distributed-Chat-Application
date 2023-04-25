@@ -28,4 +28,5 @@
 
     Or make it menu driven
 
-8.
+8. Edge of U4 to NTP not closing
+    Commit ID --> 
