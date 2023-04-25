@@ -9,6 +9,7 @@ from server import Server
 import sys
 sys.path.append('../')
 from ds_features.LoadBalancer.round_robin import RoundRobinLoadBalancer ## find a way to get this
+# from ds_features.Coordination.ClockSynchronization.berkeley import *
 
 '''
     Centralized Message Queue for Monitoring a Distributed System.
@@ -19,7 +20,7 @@ from ds_features.LoadBalancer.round_robin import RoundRobinLoadBalancer ## find 
 
 context = zmq.Context()
 socket = context.socket(zmq.PUSH)
-socket.bind("tcp://127.0.0.1:5555")
+socket.bind("tcp://127.0.0.1:5678")
 # message = input("Enter message to be sent: ")
 # socket.send_string(message)
 
@@ -78,19 +79,26 @@ initial_servers()
 '''
 lb = RoundRobinLoadBalancer(list_of_servers)
 
-
 '''
     Basic User class
 '''
 class User:
     def __init__(self, name):
         self.name = name
+        self.server = None
+    
+    def assign_server(self, server):
+        self.server = server
+
+    def __repr__(self):
+        print(f"User Name: {self.name} is assigned to Server: {self.server}")
+        return f"User Name: {self.name} is assigned to Server: {self.server}"
 
 
 users = []
 
 def initial_users(num=4):
-    names = ['PREETHAM', 'PRITHYA', 'USER3', 'USER4']
+    names = ['USER1', 'USER2', 'USER3', 'USER4']
     for i in range(num):
         users.append(User(names[i]))
         socket.send_string("user_add" + " "+ users[-1].name)
@@ -99,8 +107,14 @@ initial_users()
 for user in users:
     assign_to_this_server = lb.next_server()
     socket.send_string("edge"+ " " + user.name + "," + str(assign_to_this_server)[1:-1])
+    user.assign_server(assign_to_this_server)
+    print("====================")
+    print(user)
+    print("====================")
 
-    if(user==1):
-        lb.remove_server(list_of_servers[0])
+
 
 print("Server done")
+
+# ------------------- CLOCK SYNCHRONIZATION ----------------------------------
+
