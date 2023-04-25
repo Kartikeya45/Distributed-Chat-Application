@@ -4,9 +4,11 @@ import time
 
 print("-------------SERVER STARTED-------------")
 
+from server import Server
+
 import sys
 sys.path.append('../')
-from ds_features.LoadBalancer.round_robin import RoundRobinLoadBalancer
+from ds_features.LoadBalancer.round_robin import RoundRobinLoadBalancer ## find a way to get this
 
 '''
     Centralized Message Queue for Monitoring a Distributed System.
@@ -21,24 +23,6 @@ socket.bind("tcp://127.0.0.1:5555")
 # message = input("Enter message to be sent: ")
 # socket.send_string(message)
 
-'''
-    class Server
-        contains all the basic functionalities of a Server
-            currently doing only for round-robin for testing purposes
-'''
-
-class Server:
-    '''
-        The init function uses a "class variable" to assign a name to the server
-    '''
-    counter = 0
-
-    def __init__(self):
-        self.server_name = 'server' + str(Server.counter)
-        Server.counter += 1
-    
-    def __repr__(self):
-        return "<"+self.server_name+">"
 
 '''
     Round-Robin Load Balancer   
