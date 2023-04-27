@@ -2,7 +2,7 @@
 
 ## FrontEnd
 
-<br><br><br><br><br>
+<br><br><br>
 
 
 ## BackEnd
@@ -17,7 +17,11 @@ Change the order of the features
 * Least-Response-Time
 
 #### Dynamic Load Balancing
+ [ ] Not done
 
-### 2. Fault Tolerance
+### 2. Coordination
 
-#### Clock Synchronization
+#### Clock Synchronization Algorithms
+* Cristian Algorithm
+* Berkeley Algorithm
+* NTP

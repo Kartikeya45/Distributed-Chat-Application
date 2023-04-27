@@ -29,4 +29,9 @@
     Or make it menu driven
 
 8. Edge of U4 to NTP not closing
-    Commit ID --> 
+    Commit ID --> 18d4fd09a2531a6ea166f48416d38c0e9af01ea6
+
+9. PTP - Clock Sync Algorithm
+    Not done - as it is LAN exclusive
+
+10. 
