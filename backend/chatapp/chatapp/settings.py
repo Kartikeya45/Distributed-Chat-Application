@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-^*^-+4cj993pmzd$t$w_q55wc@*mz@+f5a^%%j8f!)#4r#xjtx
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+# import sys
+# #print(os.path.join(BASE_DIR, '../../frontend/'))
+# sys.path.append('../../frontend/')
+# print(os.getcwd())
 ALLOWED_HOSTS = ['*']
 
 
@@ -56,7 +59,7 @@ ROOT_URLCONF = 'chatapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '../../frontend/')],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
