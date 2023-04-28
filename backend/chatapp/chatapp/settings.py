@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'accounts',
+    'authentication',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -123,3 +123,22 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Server setup
+
+SERVERS = [
+    {
+        "name": "server1",
+        "host": "192.168.0.1",
+        "port": 8000,
+        "users": ["user1", "user2"]
+    },
+    {
+        "name": "server2",
+        "host": "192.168.0.2",
+        "port": 8000,
+        "users": ["user3", "user4"]
+    },
+    # add more servers as needed
+]
