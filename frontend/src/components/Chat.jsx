@@ -62,11 +62,11 @@ export default function Chat() {
   }
   function handleMessageSend() {
     const newMessageObject = {
-      sender: user.name,
-      recipient: reciever.name,
+      accessor: user.name,
+      accessed: reciever.name,
       body: newMessage,
-      timeStamp: Date.now(),
     };
+    const response = MessageService.postMessage(newMessageObject)
 
   }
 }

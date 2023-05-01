@@ -78,7 +78,7 @@ def process_command(G, command, data, c):
         
 
 def update(i):
-    time.sleep(0) # to visibly see the updates
+    time.sleep(0.5) # to visibly see the updates
     global counter
 
     command, data = message_handler.get_update()
@@ -106,7 +106,7 @@ def update(i):
     nx.set_edge_attributes(G, colors, 'color')
     nx.draw(G, pos=pos, with_labels=True, ax=ax, edge_color=[G.edges[e]['color'] for e in G.edges()])
 
-anim = FuncAnimation(fig, update, frames=range(1000), repeat=False, interval=10)
+anim = FuncAnimation(fig, update, frames=range(1000), repeat=False, interval=100)
 
 counter +=1 ## This part happens only once, If we want to update more, then put it inside update()
 manager = plt.get_current_fig_manager()

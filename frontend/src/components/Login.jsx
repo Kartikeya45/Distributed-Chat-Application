@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import MessageService from '../services/MessageService'
 
 export default function Login() {
+  const navigate = useNavigate();
     const [name, setName] = useState("");
     const [password, setPassword] = useState("")
-    const [mobile, setMobile] = useState()
+    const [mobile, setMobile] = useState("")
   return (
     <div className="container my-5">
       <h1 className="text-center">Login</h1>
@@ -45,5 +47,19 @@ export default function Login() {
       </p>
     </div>
   );
-  async function handleLogin() {}
+  async function handleLogin() {
+    const response = MessageService.postLogin({
+      mobile: mobile,
+      password: password,
+    });
+    if(response.status != 102){
+      setMobile("");
+      setPassword("");
+      alert("Invalid cred");
+    }
+    else{
+      navigate('/home');
+    }
+  }
 }
+
