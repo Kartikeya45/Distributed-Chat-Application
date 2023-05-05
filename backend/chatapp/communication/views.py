@@ -62,24 +62,27 @@ def contacts(request):
     for_recv = Message.objects.filter(receiver=current_user).values()
 
     unique_contacts = []
+    unique_names = []
     
     for person in for_sender:
-        if(person['receiver'] not in unique_contacts):
+        if(person['receiver'] not in unique_names):
             send_name = UserDetails.objects.get(phone=person['receiver'])
             print(send_name.name, type(send_name))
             unique_contacts.append({
                 "name": send_name.name,
                 "phone": person['receiver']
             })
+            unique_names.append(person['receiver'])
     
     for person in for_recv:
-        if(person['sender'] not in unique_contacts):
+        if(person['sender'] not in unique_names):
             send_name = UserDetails.objects.get(phone=person['sender'])
             
             unique_contacts.append({
                 "name": send_name.name,
                 "phone": person['sender']
             })
+            unique_names.append(person['sender'])
     
     print(unique_contacts)
     
