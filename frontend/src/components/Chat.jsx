@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import messages from "../dummy_data/messages.js";
 // import messages from "../dummy_data//groupMessages.js";
 import MessageService from "../services/messageService.js";
 
 export default function Chat() {
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     window.location.reload();
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
   const user = { name: "Kartikeya", id: 112 };
   const isGroup = false;
   const reciever = !isGroup
@@ -13,14 +19,14 @@ export default function Chat() {
   const messageBlobs = messages.map((m, i) => {
     return (
       <div
-        key={m}
+        key={Math.random()}
         className={`${
           m.sender.toLowerCase() === user.name.toLowerCase()
             ? "messager"
             : "reciever"
         } mx-3 my-1 `}
       >
-        <div key={i} className={`message rounded py-1 px-2`}>
+        <div key={Math.random()} className={`message rounded py-1 px-2`}>
           {isGroup && m.sender.toLowerCase() !== user.name.toLowerCase() && (
             <div className="groupMsg-others">{m.sender}</div>
           )}
@@ -43,7 +49,7 @@ export default function Chat() {
       </div>
       <div className="input-group mb-3"></div>
       <div className="message-area ">{messageBlobs}</div>
-      <div className="message-new px-2 my-3 position-absolute fixed-bottom d-flex">
+      <div className="px-2 my-3 position-absolute fixed-bottom d-flex">
         <input
           type="text"
           className="form-control"
@@ -66,7 +72,6 @@ export default function Chat() {
       accessed: reciever.name,
       body: newMessage,
     };
-    const response = MessageService.postMessage(newMessageObject)
-
+    const response = MessageService.postMessage(newMessageObject);
   }
 }
