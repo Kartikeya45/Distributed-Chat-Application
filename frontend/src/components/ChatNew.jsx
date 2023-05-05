@@ -11,7 +11,7 @@ export default function ChatNew({ user, selected }) {
     const intervalId = setInterval(() => {
       console.log(user, "inside");
       getMessages();
-    }, 500);
+    }, 5000);
     return () => clearInterval(intervalId);
   }, [user]);
 
@@ -80,10 +80,13 @@ export default function ChatNew({ user, selected }) {
   async function getMessages() {
     console.log("first", user, selected);
     const data = {
-      accessor: { name: user.mobile },
-      accessed: { name: reciever.phone, group: isGroup },
+      accessor: user.mobile,
+      accessed: reciever.phone,
+      group: isGroup,
     };
 
-    response = await MessageService.getMessages(data);
+    const response = await MessageService.getMessages(data);
+    console.log(response.data);
+    setMessages(response.data)
   }
 }

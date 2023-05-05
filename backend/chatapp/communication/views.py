@@ -10,15 +10,17 @@ from .models import *
 @api_view(['POST', 'GET'])
 def chat(request):
     print("<<<<<<<<<<<<<<<<<")
-    print(request.method)
+    # print(request.GET["accessed"])
+    # print(request.GET["accessor"])
     print("<<<<<<<<<<<<<<<<<")
-    accessor = request.data["accessor"]
-    accessed = request.data["accessed"]
+    # accessor = request.data["accessor"]
+    # accessed = request.data["accessed"]
 
     if(request.method == 'GET'):  
-        print(accessed)  
-        if(accessed["group"] == False):
-            user = Message.objects.filter(key=min(accessor["name"], accessed["name"]) + max(accessor["name"], accessed["name"]))
+        print(request.GET['accessor'])  
+        print(request.GET['accessed'])  
+        if(request.GET['group'] == 'false'):
+            user = Message.objects.filter(key=min(request.GET['accessor'], request.GET['accessed']) + max(request.GET['accessor'], request.GET['accessed']))
             print(user)
 
             all_messages = []
@@ -30,6 +32,8 @@ def chat(request):
 
     if(request.method == 'POST'):
         # if(accessed<accessor):
+        accessor = request.data["accessor"]
+        accessed = request.data["accessed"]
 
         msg = Message(
             sender=accessor["name"],

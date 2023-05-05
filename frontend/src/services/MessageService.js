@@ -11,16 +11,14 @@ class MessageService {
   async getMessages(data) {
     try {
       data = {
-        "accessor": {"name":"1"},
-        "accessed": {
-          "name":"2", 
-          "group":false
-        }
+        "accessor": "1",
+        "accessed": "2",
+        group: false
       }
         
       
       console.log(data, "messageservice");
-      return await http.post("/chat/", data);
+      return await http.get("/chat/", {params: data});
     } catch (error) {}
   }
 
