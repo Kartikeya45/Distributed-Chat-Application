@@ -74,7 +74,6 @@ def contacts(request):
     
     for person in for_recv:
         if(person['sender'] not in unique_contacts):
-            unique_contacts.append(person['sender'])
             send_name = UserDetails.objects.get(phone=person['sender'])
             
             unique_contacts.append({

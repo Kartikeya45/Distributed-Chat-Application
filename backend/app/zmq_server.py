@@ -5,7 +5,7 @@ import zmq.asyncio
 async def server():
     ctx = zmq.asyncio.Context.instance()
     socket = ctx.socket(zmq.REP)
-    socket.bind("tcp://*:5555")
+    socket.bind("tcp://192.168.137.1:5555")
     while True:
         message = await socket.recv()
         print(f"Received message: {message}")
