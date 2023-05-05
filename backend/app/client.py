@@ -1,14 +1,20 @@
-import asyncio
-import zmq
-import zmq.asyncio
+import socket
 
-ctx = zmq.asyncio.Context()
+# Create a socket object
+client_socket = socket.socket()
 
-async def send_messages():
-    sock = ctx.socket(zmq.PUSH)
-    sock.connect("tcp://192.168.137.1:5798")
-    while True:
-        msg = input("Enter a message: ")
-        await sock.send_string(msg)
+# Connect to the server at a specific IP address and port
+client_socket.connect(('192.168.137.1', 8000))
 
-asyncio.run(send_messages())
+# Send a message to the server
+message = "Hello, server!".encode()
+client_socket.send(message)
+
+# Receive a response from the server
+response = client_socket.recv(1024)
+
+# Print the response
+print(f"Received response: {response.decode()}")
+
+# Close the socket
+client_socket.close()

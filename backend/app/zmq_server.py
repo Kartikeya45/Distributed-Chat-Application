@@ -17,7 +17,7 @@ def async_process(msg):
 
 async def recv_and_process():
     sock = ctx.socket(zmq.PULL)
-    sock.bind("tcp://192.168.137.1:5798")
+    sock.bind("tcp://*:5798")
     while(True):
         msg = await sock.recv() # waits for msg to be ready
         async_process(msg)
