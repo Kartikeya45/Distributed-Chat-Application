@@ -1,21 +1,23 @@
-import zmq
 import asyncio
+import zmq
 import zmq.asyncio
 
-async def server():
-    ctx = zmq.asyncio.Context.instance()
-    socket = ctx.socket(zmq.REP)
-    socket.bind("tcp://192.168.137.1:5555")
-    while True:
-        message = await socket.recv()
-        print(f"Received message: {message}")
-        await socket.send(b"World")
+import sys
 
-async def main():
-    tasks = [
-        asyncio.create_task(server())
-    ]
-    await asyncio.gather(*tasks)
+if sys.platform:
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-if __name__ == "__main__":
-    asyncio.run(main())
+ctx = zmq.asyncio.Context()
+
+async def async_process(msg):
+    print(f"Received message: {msg}")
+    reply = [b"Thanks for your message!"]
+
+
+
+async def recv_and_process():
+    sock = ctx.socket(zmq.PULL)
+    sock.bind("tcp://127.0.0.1:9876")
+    msg = await sock.recv_multipart() # waits for msg to be ready
+
+asyncio.run(recv_and_process())
