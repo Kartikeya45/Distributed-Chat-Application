@@ -26,6 +26,20 @@ socket.bind("tcp://127.0.0.1:9876")
 # message = input("Enter message to be sent: ")
 # socket.send_string(message)
 
+'''
+    Socket-Server
+'''
+context = zmq.Context()
+socket = context.socket(zmq.REP)
+
+socket.bind("tcp://192.168.1.10:5555")
+
+message = socket.recv()
+
+response = "response message"
+socket.send(response.encode())
+
+
 
 '''
     Round-Robin Load Balancer   
