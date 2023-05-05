@@ -8,6 +8,22 @@ const http = axios.create({
 });
 
 class MessageService {
+  async getMessages(data) {
+    try {
+      data = {
+        "accessor": {"name":"1"},
+        "accessed": {
+          "name":"2", 
+          "group":false
+        }
+      }
+        
+      
+      console.log(data, "messageservice");
+      return await http.post("/chat/", data);
+    } catch (error) {}
+  }
+
   async postMessage(data) {
     try {
       return await http.post("/chat/", data);
@@ -16,25 +32,15 @@ class MessageService {
 
   async postLogin(data) {
     try {
-      // console.log(data);
-      return await http.post("/login", data);
+      return await http.post("login/", data);
     } catch (error) {
       console.log(`Error in Message Service/postLogin: ${error}`);
     }
   }
 
-  async getContacts() {
+  async getContacts(data) {
     try {
-      // console.log(data);
-      const x = {
-        data: [
-          { name: "rohit", phone: 9932902390 },
-          { name: "kartik", phone: 2393290390 },
-        ],
-      };
-      console.log(x);
-      return x;
-      return await http.post("/chat/contacts", data);
+      return await http.post("/chat/contacts/", data);
     } catch (error) {
       console.log(`Error in Message Service/getContacts: ${error}`);
     }

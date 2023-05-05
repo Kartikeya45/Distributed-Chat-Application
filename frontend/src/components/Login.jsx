@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import MessageService from '../services/MessageService'
+import { Link, useNavigate } from "react-router-dom";
+import MessageService from "../services/MessageService";
 
-export default function Login() {
+export default function Login({ user, setUser }) {
   const navigate = useNavigate();
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("")
-    const [mobile, setMobile] = useState("")
+  const [password, setPassword] = useState("");
+  const [mobile, setMobile] = useState("");
   return (
     <div className="container my-5">
       <h1 className="text-center">Login</h1>
@@ -22,8 +21,8 @@ export default function Login() {
           id="mobile"
           onChange={(e) => setMobile(e.target.value)}
         />
-          </div>
-          <div className="mb-3">
+      </div>
+      <div className="mb-3">
         <label htmlFor="mobile" className="form-label">
           Password:
         </label>
@@ -35,11 +34,7 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <button
-        type="submit"
-        className="btn btn-primary"
-        onClick={handleLogin}
-      >
+      <button type="submit" className="btn btn-primary" onClick={handleLogin}>
         Login
       </button>
       <p className="text-center">
@@ -48,18 +43,20 @@ export default function Login() {
     </div>
   );
   async function handleLogin() {
-    const response = MessageService.postLogin({
-      mobile: mobile,
+    const response = await MessageService.postLogin({
+      phone: mobile,
       password: password,
     });
-    if(response.status != 102){
+    console.log(response);
+    if (response.status != 200) {
       setMobile("");
       setPassword("");
       alert("Invalid cred");
-    }
-    else{
-      navigate('/home');
+    } else {
+      localStorage.setItem("dsusername", response.data);
+      localStorage.setItem("dsusermobile", mobile);
+      setUser({ ...user, name: response.data, mobile: mobile });
+      navigate("/home");
     }
   }
 }
-

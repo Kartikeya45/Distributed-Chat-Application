@@ -3,14 +3,14 @@ import messages from "../dummy_data/messages.js";
 // import messages from "../dummy_data//groupMessages.js";
 import MessageService from "../services/messageService.js";
 
-export default function Chat() {
+export default function Chat({ user }) {
   // useEffect(() => {
   //   const interval = setInterval(() => {
   //     window.location.reload();
   //   }, 1000);
   //   return () => clearInterval(interval);
   // }, []);
-  const user = { name: "Kartikeya", id: 112 };
+  const user_ = { name: "Kartikeya", id: 112 };
   const isGroup = false;
   const reciever = !isGroup
     ? { name: "Rohit", id: 123 }
@@ -21,13 +21,13 @@ export default function Chat() {
       <div
         key={Math.random()}
         className={`${
-          m.sender.toLowerCase() === user.name.toLowerCase()
+          m.sender.toLowerCase() === user_.name.toLowerCase()
             ? "messager"
             : "reciever"
         } mx-3 my-1 `}
       >
         <div key={Math.random()} className={`message rounded py-1 px-2`}>
-          {isGroup && m.sender.toLowerCase() !== user.name.toLowerCase() && (
+          {isGroup && m.sender.toLowerCase() !== user_.name.toLowerCase() && (
             <div className="groupMsg-others">{m.sender}</div>
           )}
           {m.body}
@@ -68,7 +68,7 @@ export default function Chat() {
   }
   function handleMessageSend() {
     const newMessageObject = {
-      accessor: user.name,
+      accessor: user_.name,
       accessed: reciever.name,
       body: newMessage,
     };

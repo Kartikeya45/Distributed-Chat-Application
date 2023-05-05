@@ -5,17 +5,18 @@ export default function Contacts({ user }) {
   const [contacts, setContacts] = useState([]);
   useEffect(() => {
     getContacts();
-  }, []);
+  }, [user]);
 
-  const contactsList = contacts.map((c, i) => {
-    console.log(c);
-    return (
-      <div key={c.phone} className={i == 0 ? `py-3` : 0}>
-        <div className="px-2">{c.name.toUpperCase()}</div>
-        <hr />
-      </div>
-    );
-  });
+  const contactsList =
+    contacts &&
+    contacts.map((c, i) => {
+      return (
+        <div key={Math.random()} className={i == 0 ? `py-3` : 0}>
+          <div className="px-2">{c.name}</div>
+          <hr />
+        </div>
+      );
+    });
   return (
     <div className="">
       <div className="contact">{contactsList}</div>
@@ -23,7 +24,10 @@ export default function Contacts({ user }) {
   );
 
   async function getContacts() {
-    const response = await MessageService.getContacts(user);
-    setContacts(response.data);
+    if (user.name !== "") {
+      const response = await MessageService.getContacts({ user: user.mobile });
+      // console.log(response);
+      setContacts(response.data);
+    }
   }
 }
