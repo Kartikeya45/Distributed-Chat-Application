@@ -18,8 +18,9 @@ def login(request):
         return Response(status=401)
     if(user.password == password):
         # Success condition
-        return Response(status=200)
-    print("this has to happen")
+
+        return Response(user.name ,status=200)
+    
     return Response(status=401)
 
     return render(request, 'index.html')
