@@ -48,7 +48,7 @@ export default function Login({ user, setUser }) {
       password: password,
     });
     console.log(response);
-    if (response.status != 200) {
+    if (!response || response.status != 200) {
       setMobile("");
       setPassword("");
       alert("Invalid cred");

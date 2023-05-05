@@ -10,14 +10,12 @@ const http = axios.create({
 class MessageService {
   async getMessages(data) {
     try {
-      data = {
-        "accessor": "1",
-        "accessed": "2",
-        group: false
-      }
-        
-      
-      console.log(data, "messageservice");
+      // data = {
+      //   "accessor": "1",
+      //   "accessed": "2",
+      //   group: false
+      // }
+      // console.log(data, "messageservice");
       return await http.get("/chat/", {params: data});
     } catch (error) {}
   }

@@ -3,17 +3,15 @@ import React, { useState, useEffect } from "react";
 import MessageService from "../services/messageService.js";
 
 export default function ChatNew({ user, selected }) {
-  const reciever = selected;
-
+  const receiver = selected;
+  console.log("reciever", receiver);
   const [messages, setMessages] = useState([]);
-  console.log(selected, "outside");
   useEffect(() => {
     const intervalId = setInterval(() => {
-      console.log(user, "inside");
       getMessages();
-    }, 5000);
+    }, 100);
     return () => clearInterval(intervalId);
-  }, [user]);
+  }, [user, receiver]);
 
   const isGroup = false;
 
@@ -24,46 +22,52 @@ export default function ChatNew({ user, selected }) {
         <div
           key={Math.random()}
           className={`${
-            m.sender.toLowerCase() === user.name.toLowerCase()
+            m.sender.toLowerCase() === user.mobile.toLowerCase()
               ? "messager"
-              : "reciever"
+              : "receiver"
           } mx-3 my-1 `}
         >
           <div key={Math.random()} className={`message rounded py-1 px-2`}>
-            {isGroup && m.sender.toLowerCase() !== user.name.toLowerCase() && (
-              <div className="groupMsg-others">{m.sender}</div>
-            )}
+            {isGroup &&
+              m.sender.toLowerCase() !== user.mobile.toLowerCase() && (
+                <div className="groupMsg-others">{m.sender}</div>
+              )}
             {m.body}
           </div>
         </div>
       );
     });
   const [newMessage, setNewMessage] = useState("");
+  console.log(selected && selected.phone !== "");
   return (
     <div className="chat ">
-      <div className="chat-details ">
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
-          <div className="container-fluid">
-            <a className="navbar-brand" href="#">
-              {reciever.name}
-            </a>
+      {selected && selected.phone !== "" && (
+        <>
+          <div className="chat-details ">
+            <nav className="navbar navbar-expand-lg bg-body-tertiary">
+              <div className="container-fluid">
+                <a className="navbar-brand" href="#">
+                  {receiver.name}
+                </a>
+              </div>
+            </nav>
           </div>
-        </nav>
-      </div>
-      <div className="input-group mb-3"></div>
-      <div className="message-area ">{messageBlobs}</div>
-      <div className="px-2 my-3 position-absolute fixed-bottom d-flex">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Send a message..."
-          value={newMessage}
-          onChange={handleMessageChange}
-        />
-        <button className="btn border ms-1">
-          <img src="send.svg" alt="send" />
-        </button>
-      </div>
+          <div className="input-group mb-3"></div>
+          <div className="message-area ">{messageBlobs}</div>
+          <div className="px-2 my-3 position-absolute fixed-bottom d-flex">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Send a message..."
+              value={newMessage}
+              onChange={handleMessageChange}
+            />
+            <button className="btn border ms-1" onClick={handleMessageSend}>
+              <img src="send.svg" alt="send" />
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
   function handleMessageChange(e) {
@@ -71,22 +75,24 @@ export default function ChatNew({ user, selected }) {
   }
   async function handleMessageSend() {
     const newMessageObject = {
-      accessor: { name: user.name },
-      accessed: { name: reciever.name, group: isGroup },
+      accessor: { name: user.mobile },
+      accessed: { name: receiver.phone },
       body: newMessage,
     };
+    console.log(newMessageObject);
     const response = MessageService.postMessage(newMessageObject);
+    setNewMessage("");
   }
   async function getMessages() {
-    console.log("first", user, selected);
+    // console.log("first", user, selected);
     const data = {
       accessor: user.mobile,
-      accessed: reciever.phone,
+      accessed: receiver.phone,
       group: isGroup,
     };
-
+    console.log(data);
     const response = await MessageService.getMessages(data);
     console.log(response.data);
-    setMessages(response.data)
+    setMessages(response.data);
   }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MessageService from "../services/MessageService";
 
-export default function Contacts({ user }) {
+export default function Contacts({ user, setSelected }) {
   const [contacts, setContacts] = useState([]);
   useEffect(() => {
     getContacts();
@@ -11,7 +11,11 @@ export default function Contacts({ user }) {
     contacts &&
     contacts.map((c, i) => {
       return (
-        <div key={Math.random()} className={i == 0 ? `py-3` : 0}>
+        <div
+          key={Math.random()}
+          className={i == 0 ? `py-3` : 0}
+          onClick={() => setSelected({ name: c.name, phone: c.phone })}
+        >
           <div className="px-2">{c.name}</div>
           <hr />
         </div>
