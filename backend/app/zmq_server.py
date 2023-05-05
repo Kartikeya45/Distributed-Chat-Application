@@ -9,7 +9,7 @@ if sys.platform:
 
 ctx = zmq.asyncio.Context()
 
-async def async_process(msg):
+def async_process(msg):
     print(f"Received message: {msg}")
     reply = [b"Thanks for your message!"]
 
@@ -17,7 +17,9 @@ async def async_process(msg):
 
 async def recv_and_process():
     sock = ctx.socket(zmq.PULL)
-    sock.bind("tcp://127.0.0.1:9876")
-    msg = await sock.recv_multipart() # waits for msg to be ready
+    sock.bind("tcp://192.168.137.1:5798")
+    while(True):
+        msg = await sock.recv() # waits for msg to be ready
+        async_process(msg)
 
 asyncio.run(recv_and_process())
