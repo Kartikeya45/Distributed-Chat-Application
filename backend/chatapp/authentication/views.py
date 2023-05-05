@@ -29,7 +29,6 @@ def login(request):
 def register(request):
     print(request.data)
     name = request.data.get("name", "")
-    
     password = request.data.get("password", "")
     phone = request.data.get("phone", "")
 
