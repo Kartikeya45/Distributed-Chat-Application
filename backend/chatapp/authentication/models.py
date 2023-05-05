@@ -13,7 +13,7 @@ class Message(models.Model):
 
 
 class UserDetails(models.Model):
+    name = models.CharField(max_length=100, default="default_name")
     phone = models.IntegerField()
     password = models.CharField(max_length=100)
-    chats = models.ForeignKey(Message, on_delete=models.CASCADE, null=True, blank=True)
-
+    #chats = models.ForeignKey(Message, on_delete=models.CASCADE, null=True, blank=True)

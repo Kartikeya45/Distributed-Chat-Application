@@ -53,3 +53,35 @@ def chat(request):
     if(user.password == password):
         return Response(status=102)
     return Response(status=103)
+
+@api_view(['POST', 'GET'])
+def contacts(request):
+    current_user = request.data['user']
+
+    for_sender = Message.objects.filter(sender=current_user).values()
+    for_recv = Message.objects.filter(receiver=current_user).values()
+
+    unique_contacts = []
+    
+    for person in for_sender:
+        if(person['receiver'] not in unique_contacts):
+            send_name = UserDetails.objects.get(phone=person['receiver'])
+            print(send_name.name, type(send_name))
+            unique_contacts.append({
+                "name": send_name.name,
+                "phone": person['receiver']
+            })
+    
+    for person in for_recv:
+        if(person['sender'] not in unique_contacts):
+            unique_contacts.append(person['sender'])
+            send_name = UserDetails.objects.get(phone=person['sender'])
+            
+            unique_contacts.append({
+                "name": send_name.name,
+                "phone": person['sender']
+            })
+    
+    print(unique_contacts)
+    
+    return Response(unique_contacts)

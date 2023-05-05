@@ -7,18 +7,35 @@ from .models import UserDetails
 
 @api_view(['POST'])
 def login(request):
-    mobile = request.data.get("mobile", "")
+    print(request.data)
+    phone = request.data.get("phone", "")
     password = request.data.get("password", "")
 
-    user = UserDetails.objects.filter(mobile=mobile).first()
+    user = UserDetails.objects.filter(phone=phone).first()
 
     if(not user):
+        print("first")
         return Response(status=401)
     if(user.password == password):
-        return Response(status=102)
+        # Success condition
+        return Response(status=200)
+    print("this has to happen")
     return Response(status=401)
 
     return render(request, 'index.html')
 
+@api_view(['POST'])
 def register(request):
-    pass
+    print(request.data)
+    name = request.data.get("name", "")
+    
+    password = request.data.get("password", "")
+    phone = request.data.get("phone", "")
+
+    user = UserDetails(
+        name=name,
+        phone=phone,
+        password=password
+    )
+    user.save()
+    return Response(status=200)
