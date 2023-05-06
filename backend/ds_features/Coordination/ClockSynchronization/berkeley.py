@@ -5,11 +5,17 @@ from server import Server
 # inherit Server maybe
 class BerkeleyServer:
     def __init__(self, server):
+        print("\nBerkeley server\n")
         self.server = server
         self.clients = []
 
+    def __repr__(self):
+        return f"BerkeleyServer - {self.server}"
+
     def add_client(self, client):
+        print("THis hsas to change", self.clients)
         self.clients.append(client)
+        print("THis hsas to change", self.clients)
 
     def remove_client(self, client):
         self.clients.remove(client)
@@ -17,14 +23,20 @@ class BerkeleyServer:
     def synchronize_clocks(self, socket):
         # Step 1: Get the current time from all clients
         client_times = []
+        print(self.clients)
+        print()
         for client in self.clients:
-            socket.send_string("highlight_edge_direction " + str(self.server)[1:-1] + "," + str(client))
+            # handle the name of the server properly, and send properly in the below line
+            socket.send_string("highlight_edge_direction " + str(client) + "," + str(self.server.server_name))
             client_times.append(client.get_time())
+        
+        print(client_times, "waht")
 
         # Step 2: Calculate the average time difference
         time_diff = 0
         for client_time in client_times:
             time_diff += client_time - self.get_time()
+        
         avg_time_diff = time_diff / len(client_times)
 
         # Step 3: Adjust the server's clock
@@ -32,7 +44,7 @@ class BerkeleyServer:
 
         # Step 4: Send the new time to all clients
         for client in self.clients:
-            socket.send_string("highlight_edge_direction_green " + str(self.server)[1:-1] + "," + str(client))
+            socket.send_string("highlight_edge_direction_green " + str(client) + "," + str(self.server.server_name))
             client.adjust_time(avg_time_diff)
 
     def get_time(self):
@@ -48,6 +60,7 @@ class BerkeleyServer:
 
 class BerkeleyClient:
     def __init__(self, client, server):
+        print("\nBerkeley client\n")
         self.cumulative_time_error = 0
         self.server = server
         self.client = client

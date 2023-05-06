@@ -1,7 +1,8 @@
 from typing import List
 
 class LCServer:
-    def __init__(self, name: str, initial_connections: int=0):
+    def __init__(self, name: str, server, initial_connections: int=0):
+        self.server = server
         self.name = name
         self.active_connections = initial_connections
     
@@ -11,12 +12,7 @@ class LCServer:
     def get_active_connections(self):
         return self.active_connections
 
-import sys
-sys.path.append('../../..')
-# from backend.app.main_server import get_socket
-
-# socket = get_socket()
-# print(socket)
+from server import Server
 
 class LeastConnectionLoadBalancer:
     def __init__(self, servers: List[LCServer], socket):

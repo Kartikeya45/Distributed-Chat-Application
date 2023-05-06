@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat Example</title>
+	<style>
+		#chat-window {
+			border: 1px solid black;
+			height: 200px;
+			overflow: auto;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Chat Example</h1>
+	<div id="chat-window"></div>
+	<form action="" method="post">
+        {% csrf_token %}
+		<input type="text" name="message">
+		<input type="submit" value="Send">
+	  </form>
+	
+	
+	<ul>
+        {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>

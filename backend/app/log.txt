@@ -1,0 +1,14 @@
+user_add USER6
+user_add USER8
+server_add server0
+server_add server1
+server_add server2
+user_add USER0
+user_add USER1
+user_add USER2
+user_add USER3
+user_add USER4
+user_add USER5
+user_add USER7
+user_add USER9
+server_add server0

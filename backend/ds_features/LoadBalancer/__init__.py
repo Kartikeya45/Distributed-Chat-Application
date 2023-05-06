@@ -5,4 +5,3 @@ import os
 print("----------")
 print(os.getcwd())
 
-from main_server import Server

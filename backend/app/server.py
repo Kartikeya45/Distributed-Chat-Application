@@ -10,9 +10,11 @@ class Server:
     '''
     counter = 0
 
-    def __init__(self):
+    def __init__(self, port):
         self.server_name = 'server' + str(Server.counter)
         Server.counter += 1
+        self.port = port
     
     def __repr__(self):
+        return f"Server name: {self.server_name} || Port: {self.port}"
         return "<"+self.server_name+">"

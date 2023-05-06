@@ -18,9 +18,9 @@ class RoundRobinLoadBalancer(Server):
         When a new request comes, (the request which we want to "load balance"), 
             call the next_server function to assign the request to a particular server
     '''
-    def __init__(self, servers):
+    def __init__(self, servers, port_numbers):
         print("Round robin just initialized from main_server")
-        super().__init__()
+        self.port_numbers = port_numbers
         self.servers = collections.deque(servers)
         self.num_servers = len(servers)
     

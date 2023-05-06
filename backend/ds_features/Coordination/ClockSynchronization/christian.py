@@ -23,9 +23,9 @@ class CristianClient:
 
     def synchronize_clock(self, socket):
         # Step 1: Send a request to the server for the current time
-        socket.send_string("highlight_edge_direction " + str(self.base_server)[1:-1] + "," + str(self))
+        socket.send_string("highlight_edge_direction " + str(self) + "," + str(self.base_server.server_name))
         server_time = self.server.get_time()
-        socket.send_string("highlight_edge_direction_green " + str(self.base_server)[1:-1] + "," + str(self))
+        socket.send_string("highlight_edge_direction_green " + str(self) + "," + str(self.base_server.server_name))
 
         # Step 2: Calculate the time it takes for the request to travel to the server and back
         time_diff = (self.get_time() - server_time) / 2

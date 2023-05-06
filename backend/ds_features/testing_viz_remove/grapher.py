@@ -38,6 +38,8 @@ def process_command(G, command, data, c):
         use_label = f"{first} -> {second}"
         if(len(first)==2 and second=="NTP"):
             pass
+        elif(second=="NTP"):
+            first = first[0].upper() + first[-1]
         else:
             use_label = f"{first} -> {second}"
             first = "U" + str(all_users.index(first))
@@ -47,38 +49,50 @@ def process_command(G, command, data, c):
     elif(command=="highlight_edge_direction"):
         first, second = data.split(',')
         if(first=="NTP"):
+            second = second[0].upper() + second[-1]
             colors = [(second, first), 'red']
             return colors
         elif(second=="NTP"):
+            first = first[0].upper() + first[-1]
             colors = [(first, second), 'red']
             return colors
+        if(first[0]=='S'):
+            first, second = second, first
         first = first[0].upper() + first[-1]
         second = second[0].upper() + second[-1]
-        colors = [(second, first), 'red']
+        colors = [(first, second), 'red']
         return colors
     elif(command=="highlight_edge_direction_green"):
         first, second = data.split(',')
         if(first=="NTP"):
+            if(len(second)!=2):
+                second = second[0].upper() + second[-1]
             colors = [(second, first), 'orange']
             return colors
         elif(second=="NTP"):
+            if(len(first)!=2):
+                first = first[0].upper() + first[-1]
             colors = [(first, second), 'orange']
             return colors
+        if(second[0]=='S'):
+            first, second = second, first
         first = first[0].upper() + first[-1]
         second = second[0].upper() + second[-1]
-        colors = [(second, first), 'orange']
+        colors = [(first, second), 'orange']
         return colors
     elif(command=="close_edge"):
         first, second = data.split(',')
         if(first=="NTP"):
             second, first = first, second
+        if(len(first)!=2):
+            first = first[0].upper() + first[-1]
         G.remove_edge(first, second)
     elif(command=="sleep"):
         time.sleep(float(data))
         
 
 def update(i):
-    time.sleep(0.5) # to visibly see the updates
+    # time.sleep(0.2) # to visibly see the updates
     global counter
 
     command, data = message_handler.get_update()
@@ -106,7 +120,7 @@ def update(i):
     nx.set_edge_attributes(G, colors, 'color')
     nx.draw(G, pos=pos, with_labels=True, ax=ax, edge_color=[G.edges[e]['color'] for e in G.edges()])
 
-anim = FuncAnimation(fig, update, frames=range(1000), repeat=False, interval=100)
+anim = FuncAnimation(fig, update, frames=range(1000), repeat=False, interval=10)
 
 counter +=1 ## This part happens only once, If we want to update more, then put it inside update()
 manager = plt.get_current_fig_manager()

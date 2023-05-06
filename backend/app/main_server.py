@@ -26,20 +26,6 @@ socket.bind("tcp://127.0.0.1:9876")
 # message = input("Enter message to be sent: ")
 # socket.send_string(message)
 
-'''
-    Socket-Server
-'''
-context = zmq.Context()
-socket = context.socket(zmq.REP)
-
-socket.bind("tcp://192.168.1.10:5555")
-
-message = socket.recv()
-
-response = "response message"
-socket.send(response.encode())
-
-
 
 '''
     Round-Robin Load Balancer   
@@ -86,14 +72,14 @@ list_of_servers = []
 
 def initial_servers(num=2):
     for _ in range(num):
-        list_of_servers.append(Server())
+        list_of_servers.append(Server("1000"))
         socket.send_string("server_add" + " "+ str(list_of_servers[-1])[1:-1])
 initial_servers()
 
 '''
     Demo of how load is getting distributed
 '''
-lb = RoundRobinLoadBalancer(list_of_servers)
+lb = RoundRobinLoadBalancer(list_of_servers, [1,2])
 
 '''
     Basic User class
@@ -198,6 +184,6 @@ def ntp():
         client.update_time()
         print(f"Current time of {client}: ", client.get_current_time())
 
-ntp()
+# ntp()
 # cristian()
-# berkeley()
+berkeley()

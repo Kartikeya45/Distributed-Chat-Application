@@ -16,6 +16,8 @@ class NTPClient:
     
     def get_time(self):
         response = self.ntp_client.request('pool.ntp.org')
+        print(self.client)
+        print(self)
         self.socket.send_string("edge"+ " " + str(self) + "," + "NTP")
         self.socket.send_string("highlight_edge_direction " + str(self) + "," + "NTP")
         return response.tx_time
@@ -29,7 +31,9 @@ class NTPClient:
         return time.time() + self.time_detla
 
     def __repr__(self):
-        s = str(self.client)
-        if(s[0]=='<'):
-            return s[1].upper() + s[-2]
-        return s[0]+s[-1]
+        s =  str(self.client)
+        if(s[0]=='S'):
+            sp = s.split(' ')[2]
+            return sp
+        else:
+            return s
